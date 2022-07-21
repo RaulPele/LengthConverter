@@ -8,8 +8,8 @@
 import Foundation
 
 class Converter {
-    static func convertTo(target: Unit, from: Unit, value: Double) -> Double {
-        let meters = unitToMeters[from]! * value
+    static func convertTo(target: Unit, from initial: Unit, value: Double) -> Double {
+        let meters = unitToMeters[initial]! * value
         let result = meters / unitToMeters[target]!
         
         return result

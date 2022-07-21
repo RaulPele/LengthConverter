@@ -8,25 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var fromUnit: Unit = .kilometer
-    @State private var toUnit: Unit = .meter
-    @State private var fromValue = 0.0
+    @State private var initialUnit: Unit = .kilometer
+    @State private var targetUnit: Unit = .meter
+    @State private var initialValue = 0.0
     
-    @FocusState private var fromValueIsFocused: Bool
+    @FocusState private var initialValueIsFocused: Bool
     
     var result: Double {
-        return Converter.convertTo(target: toUnit, from: fromUnit, value: fromValue)
+        return Converter.convertTo(target: targetUnit, from: initialUnit, value: initialValue)
     }
     
     var body: some View {
         NavigationView {
             Form {
                 Section {
-                    TextField("Value", value: $fromValue, format: .number)
+                    TextField("Value", value: $initialValue, format: .number)
                         .keyboardType(.decimalPad)
-                        .focused($fromValueIsFocused)
+                        .focused($initialValueIsFocused)
 
-                    Picker("Convert from: ", selection: $fromUnit) {
+                    Picker("Convert from: ", selection: $initialUnit) {
                         ForEach(Unit.allCases, id: \.self) {
                             Text($0.rawValue)
                         }
@@ -37,7 +37,7 @@ struct ContentView: View {
                 }
                 
                 Section {
-                    Picker("Convert to: ", selection: $toUnit) {
+                    Picker("Convert to: ", selection: $targetUnit) {
                         ForEach(Unit.allCases, id: \.self) {
                             Text($0.rawValue)
                         }
@@ -56,7 +56,7 @@ struct ContentView: View {
                     Spacer()
                     
                     Button("Done") {
-                        fromValueIsFocused = false
+                        initialValueIsFocused = false
                     }
                 }
             }
